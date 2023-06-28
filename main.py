@@ -7,6 +7,7 @@ import sys
 import random
 from queue import PriorityQueue, Empty
 import asyncio
+import time
 
 INIT_LENGTH = 4
 
@@ -23,6 +24,8 @@ SNAKE_COL = (6, 38, 7)
 FOOD_COL = (224, 160, 38)
 OBSTACLE_COL = (209, 59, 59)
 VISITED_COL = (24, 42, 142)
+RESTART = False
+FPS = 30
 
 
 @unique
@@ -247,17 +250,19 @@ class SnakeGame:
 
     def drawPath(self, head_pos: Position, path: List[Direction]):
         pos = head_pos
-        for turn in path:
-            pos += turn
-            pos.draw_node(self.surface, (0, 100, 0), (0, 100, 0))
+        if path:
+            for i, turn in enumerate(path):
+                brightness = 55 + i * (200 / len(path))
+                pos += turn
+                pos.draw_node(self.surface, (0, brightness, 0), (0, brightness, 0))
 
     def drawSnakeHead(self, head_pos: Position):
         head_pos.draw_node(self.surface, (0, 0, 255), (0, 0, 255))
 
-    async def run(self, fps):
+    async def run(self):
         path = []
         while not self.handle_events():
-            self.fps_clock.tick(fps)
+            self.fps_clock.tick(FPS)
             self.drawGrid()
             if self.player.move(self.snake) or self.snake.hasReset:
                 path = self.player.search_path(self.snake, self.food, self.obstacles)
@@ -282,6 +287,10 @@ class SnakeGame:
             await asyncio.sleep(0)
 
     def handle_events(self):
+        global RESTART
+        if RESTART:
+            RESTART = False
+            return True
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -453,14 +462,12 @@ def a_star(
                         i += 1
 
 
-class SearchBasedPlayer(Player):
+class AStarPlayer(Player):
     def __init__(self):
-        super(SearchBasedPlayer, self).__init__()
+        super(AStarPlayer, self).__init__()
 
     def search_path(self, snake: Snake, food: Food, obstacles: Set[Obstacle]):
         obstacles = set(s.position for s in obstacles)
-        # obstacles.update(snake.positions[1:])
-        # path = bfs(snake.get_head_position(), food.position, obstacles)
         path = a_star(
             snake.get_head_position(),
             food.position,
@@ -474,13 +481,62 @@ class SearchBasedPlayer(Player):
         return self.chosen_path
 
 
-async def main():
-    print("Hello World")
+class BFSPlayer(Player):
+    def __init__(self):
+        super(BFSPlayer, self).__init__()
+
+    def search_path(self, snake: Snake, food: Food, obstacles: Set[Obstacle]):
+        obstacles = set(s.position for s in obstacles)
+        obstacles.update(snake.positions[1:])
+        path = bfs(snake.get_head_position(), food.position, obstacles)
+        if path:
+            self.chosen_path = path
+        else:
+            snake.reset()
+        return self.chosen_path
+
+
+class DFSPlayer(Player):
+    def __init__(self):
+        super(DFSPlayer, self).__init__()
+
+    def search_path(self, snake: Snake, food: Food, obstacles: Set[Obstacle]):
+        obstacles = set(s.position for s in obstacles)
+        obstacles.update(snake.positions[1:])
+        path = dfs(snake.get_head_position(), food.position, obstacles)
+        if path:
+            self.chosen_path = path
+        else:
+            snake.reset()
+        return self.chosen_path
+
+
+async def main(player="human"):
     snake = Snake(WIDTH, WIDTH, INIT_LENGTH)
-    # player = HumanPlayer()
-    player = SearchBasedPlayer()
+    match (player):
+        case "human":
+            player = HumanPlayer()
+        case "A*":
+            player = AStarPlayer()
+        case "BFS":
+            player = BFSPlayer()
+        case "DFS":
+            player = DFSPlayer()
     game = SnakeGame(snake, player)
-    await game.run(20)
+    await game.run()
+
+
+def change_player(name: str):
+    global RESTART
+    print("button has be clicked", name)
+    time.sleep(0.1)
+    RESTART = True
+    asyncio.run(main(name))
+
+
+def change_FPS(fps: int):
+    global FPS
+    FPS = int(fps)
 
 
 if __name__ == "__main__":
