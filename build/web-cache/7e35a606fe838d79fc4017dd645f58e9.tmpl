@@ -1,16 +1,16 @@
-<html lang="en-us"><script src="https://pygame-web.github.io/archives/0.7/pythons.js" type=module id="site" data-os="vtx,fs,snd,gui" async defer>#<!--
+<html lang="en-us"><script src="{{cookiecutter.cdn}}pythons.js" type=module id="site" data-os="vtx,fs,snd,gui" async defer>#<!--
 
 print("""
-Loading snake from snake.apk
-    Pygbag Version : 0.7.1
+Loading {{cookiecutter.title}} from {{cookiecutter.archive}}.apk
+    Pygbag Version : {{cookiecutter.version}}
     Template Version : 0.7.0
-    Python  : 3.11
-    CDN URL : https://pygame-web.github.io/archives/0.7/
+    Python  : {{cookiecutter.PYBUILD}}
+    CDN URL : {{cookiecutter.cdn}}
     Screen  : {{cookiecutter.width}}x{{cookiecutter.height}}
-    Title   : snake
-    Folder  : snake
-    Authors : pgw
-    SPDX-License-Identifier: cookiecutter.spdx
+    Title   : {{cookiecutter.title}}
+    Folder  : {{cookiecutter.directory}}
+    Authors : {{cookiecutter.authors}}
+    SPDX-License-Identifier: {{cookiecutter.spdx}}
 
 """)
 
@@ -84,12 +84,12 @@ async def custom_site():
 
 
 
-    apk = "snake.apk"
+    apk = "{{cookiecutter.archive}}.apk"
 
-    bundle = "snake"
+    bundle = "{{cookiecutter.archive}}"
 
     # the C or js loader could do that but be explicit.
-    appdir = Path(f"/data/data/{bundle}") # /data/data/snake
+    appdir = Path(f"/data/data/{bundle}") # /data/data/{{cookiecutter.archive}}
     appdir.mkdir()
 
 
@@ -233,22 +233,22 @@ asyncio.run( custom_site() )
 // this dict is available under PyConfig.config from __main__
 
 config = {
-    xtermjs : "1" ,
+    xtermjs : "{{cookiecutter.xtermjs}}" ,
     _sdl2 : "canvas",
     user_canvas : 1,
     user_canvas_managed : 0,
-    ume_block : 0,
-    can_close : 1,
-    archive : "snake",
+    ume_block : {{cookiecutter.ume_block}},
+    can_close : {{cookiecutter.can_close}},
+    archive : "{{cookiecutter.archive}}",
     gui_debug : 3,
-    cdn : "https://pygame-web.github.io/archives/0.7/",
-    autorun : 0,
-    PYBUILD : "3.11"
+    cdn : "{{cookiecutter.cdn}}",
+    autorun : {{cookiecutter.autorun}},
+    PYBUILD : "{{cookiecutter.PYBUILD}}"
 }
 
 </script>
 
-    <title>snake</title>
+    <title>{{cookiecutter.title}}</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -256,10 +256,10 @@ config = {
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
 
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.7/pythonrc.py">
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.7/vt/xterm.js">
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.7/vt/xterm-addon-image.js">
-    <link rel="prefetch" href="https://pygame-web.github.io/archives/0.7/vt/xterm-addon-image.js">
+    <link rel="prefetch" href="{{cookiecutter.cdn}}pythonrc.py">
+    <link rel="prefetch" href="{{cookiecutter.cdn}}vt/xterm.js">
+    <link rel="prefetch" href="{{cookiecutter.cdn}}vt/xterm-addon-image.js">
+    <link rel="prefetch" href="{{cookiecutter.cdn}}vt/xterm-addon-image.js">
 
 
     <link rel="icon" type="image/png" href="favicon.png" sizes="16x16">
@@ -292,6 +292,14 @@ config = {
             height=100%;
             z-index: 5;
 
+            padding: 0;
+            margin: 0 auto;
+
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
         }
 
         body {
@@ -333,16 +341,7 @@ config = {
         }
     </style>
 
-    <script src="https://pygame-web.github.io/archives/0.7//browserfs.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="{{cookiecutter.cdn}}/browserfs.min.js"></script>
 
 </head>
 
@@ -356,43 +355,13 @@ config = {
         </div>
     </div>
 
-    <div class="container">
-    <div class="row h-100 w-100 gap-3">
-        <div class="col">
-            <div class="row">
-                <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Select Player
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" onclick=py.change_player('human')>Human player</a></li>
-                    <li><a class="dropdown-item" onclick=py.change_player('A*')>A* algorithm</a></li>
-                    <li><a class="dropdown-item" onclick=py.change_player('BFS')>Breadth First Search algorithm</a></li>
-                    <li><a class="dropdown-item" onclick=py.change_player('DFS')>Depth First Search algorithm</a></li>
-                </ul>
-                </div>
-            </div>
-            <div class = "row">
-             <label for="fpsrange" class="form-label" id="fpsform">Change FPS: 30</label>
-                <input type="range" class="form-range" min="3" max="60" step="1" id="fpsrange">
-                <script>
-                    var fpsrange = document.getElementById("fpsrange");
-                    var fpsform = document.getElementById("fpsform");
-                    fpsrange.oninput = function() {
-                        fpsform.innerHTML = "Change FPS: " + this.value;
-                        py.fps = this.value;
-                        py.change_FPS(this.value);
-                    }
-                </script>
-            </div>
-        </div>
-        <div class="col">
-            <canvas class="emscripten" id="canvas" width="1px" height="1px"
-                    oncontextmenu="event.preventDefault()" tabindex=1>
-            </canvas>
-        </div
-        </div
-    </div>
+
+    <canvas class="emscripten" id="canvas"
+width="1px"
+height="1px"
+    oncontextmenu="event.preventDefault()" tabindex=1>
+    </canvas>
+
     <div id=html></div>
 
     <div id=crt  class=bottomright >
@@ -432,7 +401,7 @@ frameborder="1"
                 mozallowfullscreen="true"
                 sandbox="allow-same-origin allow-top-navigation allow-scripts allow-pointer-lock"
                 allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated"
-                src="https://pygame-web.github.io/archives/0.7/empty.html"
+                src="{{cookiecutter.cdn}}empty.html"
                 scrolling="yes">
             </iframe>
         </div>
