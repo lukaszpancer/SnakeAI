@@ -301,13 +301,10 @@ asyncio.run( custom_site() )
         canvas.emscripten {
             border: 0px none;
             background-color: transparent;
-            width: 100%;
-            max-height: 100%;
             z-index: 5;
-
             padding: 0;
             margin: 0 auto;
-
+            max-width: 100%;
             // position: absolute;
             // top: 0;
             // bottom: 0;
@@ -425,7 +422,7 @@ asyncio.run( custom_site() )
                     </script>
                 </div>
             </div>
-            <div class="col h-100">
+            <div class="col h-100 d-flex">
                 <canvas class="emscripten" id="canvas" width="1px" height="1px" oncontextmenu="event.preventDefault()"
                     tabindex=1>
                 </canvas>
