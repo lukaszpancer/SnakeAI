@@ -511,7 +511,7 @@ class DFSPlayer(Player):
         return self.chosen_path
 
 
-async def main(player="human"):
+async def main(player="A*"):
     snake = Snake(WIDTH, WIDTH, INIT_LENGTH)
     match (player):
         case "human":
