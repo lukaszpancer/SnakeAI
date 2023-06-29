@@ -1,18 +1,19 @@
 <html lang="en-us"><script src="https://pygame-web.github.io/archives/0.7/pythons.js" type=module id="site" data-os="vtx,fs,snd,gui" async defer>#<!--
 
 print("""
-Loading snake from snake.apk
+Loading snakeai from snakeai.apk
     Pygbag Version : 0.7.1
     Template Version : 0.7.0
     Python  : 3.11
     CDN URL : https://pygame-web.github.io/archives/0.7/
     Screen  : {{cookiecutter.width}}x{{cookiecutter.height}}
-    Title   : snake
-    Folder  : snake
+    Title   : snakeai
+    Folder  : snakeai
     Authors : pgw
     SPDX-License-Identifier: cookiecutter.spdx
 
 """)
+
 
 # screen pixels (real, hardware)
 WIDTH=1024  # {{cookiecutter.width}}
@@ -83,12 +84,12 @@ async def custom_site():
 
 
 
-    apk = "snake.apk"
+    apk = "snakeai.apk"
 
-    bundle = "snake"
+    bundle = "snakeai"
 
     # the C or js loader could do that but be explicit.
-    appdir = Path(f"/data/data/{bundle}") # /data/data/snake
+    appdir = Path(f"/data/data/{bundle}") # /data/data/snakeai
     appdir.mkdir()
 
 
@@ -236,9 +237,9 @@ config = {
     _sdl2 : "canvas",
     user_canvas : 1,
     user_canvas_managed : 0,
-    ume_block : 0,
-    can_close : 1,
-    archive : "snake",
+    ume_block : 1,
+    can_close : 0,
+    archive : "snakeai",
     gui_debug : 3,
     cdn : "https://pygame-web.github.io/archives/0.7/",
     autorun : 0,
@@ -247,7 +248,7 @@ config = {
 
 </script>
 
-    <title>snake</title>
+    <title>snakeai</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -291,6 +292,14 @@ config = {
             height=100%;
             z-index: 5;
 
+            padding: 0;
+            margin: 0 auto;
+
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
         }
 
         body {
@@ -333,7 +342,7 @@ config = {
     </style>
 
     <script src="https://pygame-web.github.io/archives/0.7//browserfs.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -392,6 +401,8 @@ config = {
         </div
         </div
     </div>
+    <div id=html></div>
+
     <div id=html></div>
 
     <div id=crt  class=bottomright >
