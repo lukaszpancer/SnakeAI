@@ -303,8 +303,9 @@ asyncio.run( custom_site() )
             background-color: transparent;
             z-index: 5;
             padding: 0;
-            margin: 0 auto;
-            max-width: 100%;
+            // margin: 0;
+            height: 100%;
+            width: 100%;
             // position: absolute;
             // top: 0;
             // bottom: 0;
@@ -376,162 +377,167 @@ asyncio.run( custom_site() )
         </div>
     </div>
 
-    <div>
-        <div class="h-100 w-100 d-flex flex-row">
-            <div class="w-25">
-                <nav class="navbar navbar-light bg-primary px-2">
-                    <a class="navbar-brand text-white" href="#">SnakeAI</a>
-                </nav>
-                <div
-                    class="container-fluid d-flex flex-column justify-content-center align-items-center gap-3 text-white">
-                    <h1 class="display-6">
-                        Settings:
-                    </h1>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            A* algorithm
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item"
-                                    onclick="py.change_player('human'); document.getElementById('dropdownMenuButton1').innerHTML = 'Human player'">Human
-                                    player</a></li>
-                            <li><a class="dropdown-item"
-                                    onclick="py.change_player('A*'); document.getElementById('dropdownMenuButton1').innerHTML = 'A* algorithm'">A*
-                                    algorithm</a></li>
-                            <li><a class="dropdown-item"
-                                    onclick="py.change_player('BFS'); document.getElementById('dropdownMenuButton1').innerHTML = 'Breadth First Search'">Breadth
-                                    First Search
-                                    algorithm</a></li>
-                            <li><a class="dropdown-item"
-                                    onclick="py.change_player('DFS'); document.getElementById('dropdownMenuButton1').innerHTML = 'Depth First Search'">Depth
-                                    First Search
-                                    algorithm</a></li>
-                        </ul>
-                    </div>
-                    <label for=" fpsrange" class="form-label" id="fpsform">Change FPS: 30</label>
-                    <input type="range" class="form-range" min="3" max="60" step="1" id="fpsrange">
-                    <script>
-                        var fpsrange = document.getElementById("fpsrange");
-                        var fpsform = document.getElementById("fpsform");
-                        fpsrange.oninput = function () {
-                            fpsform.innerHTML = "Change FPS: " + this.value;
-                            py.fps = this.value;
-                            py.change_FPS(this.value);
-                        }
-                    </script>
-                </div>
-            </div>
-            <div class="col h-100 d-flex">
-                <canvas class="emscripten" id="canvas" width="1px" height="1px" oncontextmenu="event.preventDefault()"
-                    tabindex=1>
-                </canvas>
-            </div </div </div>
-            <div id=html></div>
+    <div class="h-100 w-100 container">
 
-            <div id=crt class=bottomright>
-
-                <div id="system" hidden>
-                    <div class="button-container">
-                        <button id="aiostop" disabled>AIO ⏏︎</button>
-                        <button id="aiopaused_true" disabled>AIO ■</button>
-                        <button id="aiopaused_false" disabled>AIO ▶</button>
-                        <button id="pygame_mixer_music_pause" disabled>Music ■</button>
+        <div class="row w-100 h-100 gap-5 align-items-xxl-start align-items-start justify-content-center">
+            <div class="col card p-0 my-5">
+                <h6 class="card-header">SnakeAI</h6>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <h1 class="display-6 list-group-item">
+                            Settings:
+                        </h1>
+                        <div class="dropdown list-group-item">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Human player
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item"
+                                        onclick="py.change_player('human'); document.getElementById('dropdownMenuButton1').innerHTML = 'Human player'">Human
+                                        player</a></li>
+                                <li><a class="dropdown-item"
+                                        onclick="py.change_player('A*'); document.getElementById('dropdownMenuButton1').innerHTML = 'A* algorithm'">A*
+                                        algorithm</a></li>
+                                <li><a class="dropdown-item"
+                                        onclick="py.change_player('BFS'); document.getElementById('dropdownMenuButton1').innerHTML = 'Breadth First Search'">Breadth
+                                        First Search
+                                        algorithm</a></li>
+                                <li><a class="dropdown-item"
+                                        onclick="py.change_player('DFS'); document.getElementById('dropdownMenuButton1').innerHTML = 'Depth First Search'">Depth
+                                        First Search
+                                        algorithm</a></li>
+                            </ul>
+                        </div>
+                        <label for=" fpsrange" class="form-label " id="fpsform">Change FPS: 30</label>
+                        <input type="range" class="form-range" min="3" max="60" step="1" id="fpsrange">
+                        <script>
+                            var fpsrange = document.getElementById("fpsrange");
+                            var fpsform = document.getElementById("fpsform");
+                            fpsrange.oninput = function () {
+                                fpsform.innerHTML = "Change FPS: " + this.value;
+                                py.fps = this.value;
+                                py.change_FPS(this.value);
+                            }
+                        </script>
                     </div>
 
-                    <div class="button-container">
-                        <div id=load_min>min</div>
-                        <div id=load_avg>avg</div>
-                        <div id=load_max>max</div>
-                        <button id="load_rst" disabled>RESET</button>
-                    </div>
-
-                    <div id="level">(battery level unknown)</div>
-                    <div id="stateBattery">(charging state unknown)</div>
-
                 </div>
-
-                <div id=box class="emscripten_border" hidden=true>
-
-                    <div id="info" class="trinfo"></div>
-
-                    <iframe id="iframe" class="framed" name="iframe" width="470px" height="90%" allowtransparency="true"
-                        style="z-index: 10; style=" background: #FFFFFF;" frameborder="1" allowfullscreen="true"
-                        webkitallowfullscreen="true" msallowfullscreen="true" mozallowfullscreen="true"
-                        sandbox="allow-same-origin allow-top-navigation allow-scripts allow-pointer-lock"
-                        allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated"
-                        src="https://pygame-web.github.io/archives/0.7/empty.html" scrolling="yes">
-                    </iframe>
+            </div>
+            <div class="col-12 col-xxl-9 h-100 d-flex align-items-xl-center align-items-start justify-content-center">
+                <div style="max-height: 100%; aspect-ratio: 1; margin:0;">
+                    <canvas class="emscripten" id="canvas" width="1px" height="1px"
+                        oncontextmenu="event.preventDefault()" tabindex=1>
+                    </canvas>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id=html></div>
 
+    <div id=crt class=bottomright>
+
+        <div id="system" hidden>
+            <div class="button-container">
+                <button id="aiostop" disabled>AIO ⏏︎</button>
+                <button id="aiopaused_true" disabled>AIO ■</button>
+                <button id="aiopaused_false" disabled>AIO ▶</button>
+                <button id="pygame_mixer_music_pause" disabled>Music ■</button>
             </div>
 
-
-            <div id="dlg" hidden>
-                <input type="file" id="dlg_multifile" multiple accept="image/*">
-                <label for="dlg_multifile">Select files</label>
+            <div class="button-container">
+                <div id=load_min>min</div>
+                <div id=load_avg>avg</div>
+                <div id=load_max>max</div>
+                <button id="load_rst" disabled>RESET</button>
             </div>
 
-            <div id="pyconsole">
-                <div id="terminal" tabIndex=1 align="left"></div>
-            </div>
+            <div id="level">(battery level unknown)</div>
+            <div id="stateBattery">(charging state unknown)</div>
 
-            <script type="application/javascript">
+        </div>
 
-                async function custom_onload(debug_hidden) {
-                    // this is called before anythinh python is loaded
-                    // make your js customization here
-                    console.log(__FILE__, "custom_onload")
+        <div id=box class="emscripten_border" hidden=true>
 
-                    pyconsole.hidden = debug_hidden
-                    system.hidden = debug_hidden
-                    transfer.hidden = debug_hidden
-                    info.hidden = debug_hidden
-                    box.hidden = debug_hidden
-                }
+            <div id="info" class="trinfo"></div>
 
-                function custom_prerun() {
-                    // no python main and no (MEMFS + VFS) yet.
-                    console.log(__FILE__, "custom_prerun")
+            <iframe id="iframe" class="framed" name="iframe" width="470px" height="90%" allowtransparency="true"
+                style="z-index: 10; style=" background: #FFFFFF;" frameborder="1" allowfullscreen="true"
+                webkitallowfullscreen="true" msallowfullscreen="true" mozallowfullscreen="true"
+                sandbox="allow-same-origin allow-top-navigation allow-scripts allow-pointer-lock"
+                allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated"
+                src="https://pygame-web.github.io/archives/0.7/empty.html" scrolling="yes">
+            </iframe>
+        </div>
 
-                }
+    </div>
 
-                function custom_postrun() {
-                    // python main and no VFS filesystem yet.
-                    console.log(__FILE__, "custom_postrun")
 
-                }
+    <div id="dlg" hidden>
+        <input type="file" id="dlg_multifile" multiple accept="image/*">
+        <label for="dlg_multifile">Select files</label>
+    </div>
 
-                function debug() {
-                    // allow to gain access to dev tools from js console
-                    // but only on desktop. difficult to reach when in iframe
-                    python.config.debug = true
-                    custom_onload(false)
-                    Module.PyRun_SimpleString("shell.uptime()")
-                    window_resize()
-                }
+    <div id="pyconsole">
+        <div id="terminal" tabIndex=1 align="left"></div>
+    </div>
 
-                function info_inline(data) {
-                    document.getElementById("info").innerHTML = data
-                }
+    <script type="application/javascript">
 
-                function info_online(url) {
-                    // display info about current APK
-                    fetch(url /*, options */)
-                        .then((response) => response.text())
-                        .then((html) => {
-                            info_inline(html);
-                        })
-                        .catch((error) => {
-                            console.warn(error);
-                        });
-                }
+        async function custom_onload(debug_hidden) {
+            // this is called before anythinh python is loaded
+            // make your js customization here
+            console.log(__FILE__, "custom_onload")
 
-                function frame_online(url) {
-                    window.frames["iframe"].location = url;
-                }
+            pyconsole.hidden = debug_hidden
+            system.hidden = debug_hidden
+            transfer.hidden = debug_hidden
+            info.hidden = debug_hidden
+            box.hidden = debug_hidden
+        }
 
-            </script>
+        function custom_prerun() {
+            // no python main and no (MEMFS + VFS) yet.
+            console.log(__FILE__, "custom_prerun")
+
+        }
+
+        function custom_postrun() {
+            // python main and no VFS filesystem yet.
+            console.log(__FILE__, "custom_postrun")
+
+        }
+
+        function debug() {
+            // allow to gain access to dev tools from js console
+            // but only on desktop. difficult to reach when in iframe
+            python.config.debug = true
+            custom_onload(false)
+            Module.PyRun_SimpleString("shell.uptime()")
+            window_resize()
+        }
+
+        function info_inline(data) {
+            document.getElementById("info").innerHTML = data
+        }
+
+        function info_online(url) {
+            // display info about current APK
+            fetch(url /*, options */)
+                .then((response) => response.text())
+                .then((html) => {
+                    info_inline(html);
+                })
+                .catch((error) => {
+                    console.warn(error);
+                });
+        }
+
+        function frame_online(url) {
+            window.frames["iframe"].location = url;
+        }
+
+    </script>
 
 </body>
 
