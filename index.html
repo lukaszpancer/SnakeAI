@@ -394,9 +394,6 @@ asyncio.run( custom_site() )
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item"
-                                        onclick="py.change_player('human'); document.getElementById('dropdownMenuButton1').innerHTML = 'Human player'">Human
-                                        player</a></li>
-                                <li><a class="dropdown-item"
                                         onclick="py.change_player('A*'); document.getElementById('dropdownMenuButton1').innerHTML = 'A* algorithm'">A*
                                         algorithm</a></li>
                                 <li><a class="dropdown-item"
@@ -407,6 +404,9 @@ asyncio.run( custom_site() )
                                         onclick="py.change_player('DFS'); document.getElementById('dropdownMenuButton1').innerHTML = 'Depth First Search'">Depth
                                         First Search
                                         algorithm</a></li>
+                                <li><a class="dropdown-item"
+                                        onclick="py.change_player('human'); document.getElementById('dropdownMenuButton1').innerHTML = 'Human player'">Human
+                                        player</a></li>
                             </ul>
                         </div>
                         <label for=" fpsrange" class="form-label " id="fpsform">Change FPS: 30</label>
