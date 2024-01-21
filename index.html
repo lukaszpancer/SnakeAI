@@ -350,6 +350,12 @@ asyncio.run( custom_site() )
             right: 10px;
             border: 1px solid black;
         }
+
+        @media (min-width: 1400px) {
+            .h-md-100 {
+                height: 100% !important;
+            }
+        }
     </style>
 
     <script src="https://pygame-web.github.io/archives/0.7//browserfs.min.js"></script>
@@ -379,8 +385,8 @@ asyncio.run( custom_site() )
 
     <div class="h-100 w-100 container">
 
-        <div class="row w-100 h-100 gap-5 align-items-xxl-start align-items-start justify-content-center">
-            <div class="col card p-0 my-5">
+        <div class="row w-100 h-100 gap-5 align-items-xxl-start justify-content-center">
+            <div class="col card p-0 mt-5">
                 <h6 class="card-header">SnakeAI</h6>
                 <div class="card-body">
                     <div class="list-group list-group-flush">
@@ -390,7 +396,7 @@ asyncio.run( custom_site() )
                         <div class="dropdown list-group-item">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                A* algorithm
+                                Human player
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item"
@@ -424,10 +430,11 @@ asyncio.run( custom_site() )
 
                 </div>
             </div>
-            <div class="col-12 col-xxl-9 h-100 d-flex align-items-xl-center align-items-start justify-content-center">
+            <div
+                class="col-12 col-xxl-9 h-md-100 d-flex align-items-xl-center align-items-start justify-content-center">
                 <div style="max-height: 100%; aspect-ratio: 1; margin:0;">
                     <canvas class="emscripten" id="canvas" width="1px" height="1px"
-                        oncontextmenu="event.preventDefault()" tabindex=1>
+                        oncontextmenu="event.preventDefault()" tabindex="1">
                     </canvas>
                 </div>
             </div>
